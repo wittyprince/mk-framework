@@ -21,6 +21,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         log.info("MyAuthFilter权限过滤器 前置逻辑");
         String token = exchange.getRequest().getHeaders().getFirst("access_token");
         String path = exchange.getRequest().getURI().getPath();
+        log.info("请求path:[{}]", path);
 
         if (!StringUtils.hasText(token)/* && (StringUtils.hasText(path) && !path.contains("/login"))*/) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
