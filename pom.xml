@@ -11,7 +11,8 @@
   <url>http://maven.apache.org</url>
 
   <modules>
-    <module>mk-gateway</module>
+      <module>mk-gateway</module>
+      <module>mk-circuitbreaker</module>
   </modules>
 
   <properties>
