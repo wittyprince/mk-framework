@@ -18,18 +18,19 @@ import reactor.core.publisher.Mono;
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("MyAuthFilter权限过滤器 前置逻辑");
+        log.info("AuthGlobalFilter权限过滤器 前置逻辑");
         String token = exchange.getRequest().getHeaders().getFirst("access_token");
         String path = exchange.getRequest().getURI().getPath();
         log.info("请求path:[{}]", path);
 
         if (!StringUtils.hasText(token)/* && (StringUtils.hasText(path) && !path.contains("/login"))*/) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            log.error("AuthFilter异常, 请求header未携带access_token: [{}]", HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
 
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-            log.info("MyAuthFilter权限过滤器 后置逻辑");
+            log.info("AuthGlobalFilter权限过滤器 后置逻辑");
         }));
     }
 

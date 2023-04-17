@@ -26,13 +26,13 @@ public class UserIdCheckGatewayFilterFactory extends AbstractGatewayFilterFactor
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             String url = exchange.getRequest().getPath().pathWithinApplication().value();
-            log.info("请求URL:[{}]", url);
-            log.info("method:[{}]", exchange.getRequest().getMethod());
+            log.info("UserIdCheckGatewayFilter, 请求URL:[{}]", url);
+            log.info("UserIdCheckGatewayFilter, 请求method:[{}]", exchange.getRequest().getMethod());
             //获取header
-            String userId = exchange.getRequest().getHeaders().getFirst("user-id");
-            log.info("userId：[{}]", userId);
+            String userId = exchange.getRequest().getHeaders().getFirst("userId");
+            log.info("UserIdCheckGatewayFilter, userId：[{}]", userId);
             if (!StringUtils.hasText(userId)) {
-                log.info("***** 头部验证不通过，请在头部输入  user-id *****");
+                log.error("***** UserIdCheckGatewayFilter, 头部验证不通过，请在头部输入userId *****");
                 //终止请求，直接回应
                 exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
                 return exchange.getResponse().setComplete();

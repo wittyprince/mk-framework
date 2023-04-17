@@ -14,9 +14,9 @@ public class DemoGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("AFilter前置逻辑");
+        log.info("DemoGlobalFilter前置逻辑");
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-            log.info("AFilter后置逻辑");
+            log.info("DemoGlobalFilter后置逻辑");
         }));
     }
 
